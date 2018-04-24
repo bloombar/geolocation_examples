@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Geolocation</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+		<script>
+$(function() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			$(".lat").html(position.coords.latitude);
+			$(".long").html(position.coords.longitude); 
+			$(".feedback").hide();
+			$(".location").fadeIn();
+		});
+	} else {
+	    $(".feedback").html("Sorry... geolocation is not supported by this browser.");
+	}
+}, function (error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+		$(".feedback").html("Sorry, you denied the request for Geolocation.");
+		break;
+        case error.POSITION_UNAVAILABLE:
+		$(".feedback").html("Sorry, geolocation information is unavailable.");
+		break;
+        case error.TIMEOUT:
+		$(".feedback").html("Sorry, the request to get your location timed out.");
+		break;
+        case error.UNKNOWN_ERROR:
+		$(".feedback").html("Sorry, an unknown error occurred.");
+		break;
+    }
+});
+
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Geolocation example</h1>
+			<p>This page must be requested via HTTPS.</p>
+
+			<section class="feedback">
+				<p>Loading your location on Earth...</p>
+			</section>
+
+			<section class="location">
+				<p>Your position:</p>
+				<ul>
+					<li>Latitude: <span class="lat">Calculating...</span></li>
+					<li>Longitude: <span class="long">Calculating...</span></li>
+				</ul>
+			</section>
+		</div>
+	</body>
+</html>
